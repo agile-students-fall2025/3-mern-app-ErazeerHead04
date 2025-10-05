@@ -80,3 +80,23 @@ app.post('/messages/save', async (req, res) => {
 
 // export the express app we created to make it available to other modules
 module.exports = app // CommonJS export style!
+
+
+const path = require('path'); // add near other requires if not already there
+
+// Serve static files 
+app.use('/static', express.static(path.join(__dirname, 'public')));
+
+// NEW: About Us JSON route
+app.get('/api/about-us', (req, res) => {
+  const base = process.env.PUBLIC_BASE_URL || 'http://localhost:5002';
+  res.json({
+    name: 'Ahmmed Razee',
+    title: 'NYU student, MERN learner',
+    paragraphs: [
+      "Hi! I'm Ahmmed Razee (ar7903). I'm currently taking Agile SWE and learning full-stack MERN.",
+      "I enjoy building practical apps that connect clean UIs to solid data models."
+    ],
+    photoUrl: `${base}/static/Razee.jpg` // change filename if you used a different one
+  });
+});
